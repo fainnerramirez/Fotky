@@ -3,6 +3,7 @@ import * as COLOR from "../Colors";
 
 const HomeWrapp = styled.section`
   width: 100%;
+
   .home {
     width: 100%;
     margin-top: 50px;
