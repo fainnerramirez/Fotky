@@ -19,15 +19,10 @@ const fetchApi = (searchUser: string, root: HTMLElement) => {
       const { results } = data;
 
       results.map((item: any) => {
-        root.innerHTML += `
-         <div class="card" style="width: 300px">
-           <img src=${item.urls.regular} class="card-img-top" alt="image api" style="width: 100%; height="250px">
-           <div class="card-body">
-             <h5 class="card-title">Card title</h5>
-             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-           </div>
-         </div>`;
+        const { regular } = item.urls;
+        const img = document.createElement("img");
+        img.src = regular;
+        root.append(img);
       });
     })
     .catch(console.error);
@@ -38,7 +33,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const root = document.getElementById("root-images") || null;
-    root ? fetchApi(images, root) : console.log("root es null: ", root);
+    root ? fetchApi("dogs", root) : console.log("root es null: ", root);
   });
 
   return (
