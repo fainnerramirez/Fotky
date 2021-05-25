@@ -36,6 +36,15 @@ const HomeWrapp = styled.section`
       }
     }
   }
+
+  .root-images {
+    padding-top: 30px;
+    background: ${COLOR.GRIS};
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 `;
 
 export default HomeWrapp;

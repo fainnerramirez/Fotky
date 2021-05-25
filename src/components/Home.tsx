@@ -3,29 +3,36 @@ import axios from "axios";
 import dotenv from "dotenv";
 //Css Components
 import HomeWrapp from "./styles/stylesHome/home";
-//Bootstrap 4
-import Button from "react-bootstrap/Button";
 //config dotenv
 dotenv.config();
-//const
+//variables de entorno
 const CLIENT_API = process.env.REACT_APP_UNPLASH_KEY;
 
-const fetchApi = (searchUser: string, root: HTMLElement) => {
-  return axios
-    .get(
-      `https://api.unsplash.com/search/photos?page=1&query=${searchUser}&&client_id=${CLIENT_API}`
-    )
-    .then(({ data }) => {
-      const { results } = data;
+const fetchApi = async (searchUser: string, root: HTMLElement) => {
+  try {
+    root.innerHTML = "";
+    const response = await axios.get(
+      `https://api.unsplash.com/search/photos?&query=${searchUser}&&client_id=${CLIENT_API}`
+    );
 
-      results.map((item: any) => {
-        const { regular } = item.urls;
-        const img = document.createElement("img");
-        img.src = regular;
-        root.append(img);
-      });
-    })
-    .catch(console.error);
+    const { data } = response;
+    const { results } = data;
+
+    results.map((item: any) => {
+      const { regular } = item.urls;
+      const img = document.createElement("img");
+      img.src = regular;
+      //styles img
+      img.style.width = "300px";
+      img.style.height = "250px";
+      img.style.marginBottom = "30px";
+      img.style.marginTop = "30px";
+      img.style.borderRadius = "7px";
+      root.append(img);
+    });
+  } catch (err: any) {
+    console.log("Error: ", err);
+  }
 };
 
 const Home: React.FC = () => {
@@ -33,7 +40,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const root = document.getElementById("root-images") || null;
-    root ? fetchApi("dogs", root) : console.log("root es null: ", root);
+    root ? fetchApi(images, root) : console.log("root es null: ", root);
   });
 
   return (
@@ -45,14 +52,13 @@ const Home: React.FC = () => {
         <div className="home__input">
           <input
             type="text"
-            placeholder="¡Busca cualquier foto! Ej. animales"
+            placeholder="¡Search! Example: cats"
             id="input-search"
             onChange={(e) => setImages(e.target.value)}
           />
-          <Button className="ml-4">Buscar</Button>
         </div>
       </div>
-      <div id="root-images"></div>
+      <div className="root-images" id="root-images"></div>
     </HomeWrapp>
   );
 };
