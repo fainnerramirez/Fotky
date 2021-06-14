@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import dotenv from 'dotenv';
 //Css Components
-import HomeWrapp from './styles/stylesHome/home';
-import * as COLOR from './styles/Colors';
-//config dotenv
-dotenv.config();
-//variables de entorno
+import HomeWrapp from './styles/Home.style';
+import { COLOR } from './Colors';
+import imageDefault from '../assets/defaultImage.png';
+
 const CLIENT_API = process.env.REACT_APP_UNPLASH_KEY;
 
 const fetchApi: Function = async (searchUser: string, root: HTMLElement) => {
   try {
     root.innerHTML = '';
 
-    const response = await axios.get(
+    const { data } = await axios.get(
       `https://api.unsplash.com/search/photos?page=5&query=${searchUser}&&client_id=${CLIENT_API}`
     );
 
-    const { data } = response;
     const { results } = data;
 
     results.map((item: any, index: number) => {
@@ -30,7 +27,7 @@ const fetchApi: Function = async (searchUser: string, root: HTMLElement) => {
         location = 'not registered';
       }
 
-      root.innerHTML += `
+      return (root.innerHTML += `
       <div key=${index} class="card mt-4 mb-4" style="width: 20rem; border-radius: 50px;
       background: #e8e8e8;
       box-shadow:  20px 20px 60px #c5c5c5,-20px -20px 60px #ffffff;">
@@ -42,7 +39,7 @@ const fetchApi: Function = async (searchUser: string, root: HTMLElement) => {
             <a href=${download} target="_blank" class="btn" style="background: ${COLOR.VERDE}; color: #ffffff">Download Image</a>
           </div>
       </div>
-      `;
+      `);
     });
   } catch (err: any) {
     console.error('Error: ', err);
@@ -51,12 +48,22 @@ const fetchApi: Function = async (searchUser: string, root: HTMLElement) => {
 
 const Home: React.FC = () => {
   const [images, setImages] = useState('');
+  const [image, setImage] = useState(imageDefault);
 
-  useEffect(() => {
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    setImage('');
     const root = document.getElementById('root-images');
     root ? fetchApi(images, root) : console.error('root es null: ', root);
     document.title = images;
-  });
+  };
+
+  useEffect(() => {
+    const root = document.getElementById('root-images');
+    root
+      ? (root.innerHTML = `<img src=${image} alt="Image default app"/>`)
+      : console.error('root es null: ', root);
+  }, []);
 
   return (
     <HomeWrapp>
@@ -71,11 +78,16 @@ const Home: React.FC = () => {
             id="input-search"
             onChange={(e) => setImages(e.target.value)}
           />
+
+          <button
+            className="btn btn-success mx-3 px-4 py-2"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
       </div>
-      <div className="root-images" id="root-images">
-        <h1>Aun no ha buscado nada</h1>
-      </div>
+      <div className="root-images" id="root-images"></div>
     </HomeWrapp>
   );
 };

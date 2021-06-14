@@ -1,14 +1,25 @@
+import ImageNotFoud from '../assets/404.png';
+
 import { Link } from 'react-router-dom';
-import * as ROUTE from './Route';
+import { ROUTE } from './Route';
 
 const NotFound = () => {
   return (
-    <>
-      <h1>Not Found Page</h1>
-      <Link className="btn btn-success" to={ROUTE.HOME}>
-        Go Home
-      </Link>
-    </>
+    <div style={{ textAlign: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '500px',
+          margin: 'auto',
+        }}
+      >
+        <img src={ImageNotFoud} alt="Not found image" />
+        <Link className="btn btn-success w-25 m-auto" to={ROUTE.HOME}>
+          Go Home
+        </Link>
+      </div>
+    </div>
   );
 };
 

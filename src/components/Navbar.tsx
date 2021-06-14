@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NavbarWrapp from './styles/stylesNavbar/navbar';
+import NavbarWrapp from './styles/Navbar.style';
 //components Bootstrap
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 //Assets
 import Logo from '../assets/logo.png';
 
-import * as ROUTE from '../components/Route';
+import { ROUTE } from './Route';
 
 const NavbarApp: React.FC = () => {
   return (
@@ -20,19 +20,33 @@ const NavbarApp: React.FC = () => {
           </Link>
         </Navbar.Brand>
 
-        <Nav className="navbar__nav ml-auto">
-          <Nav.Item className="mr-5 navbar__nav__link">
-            <Nav.Link className="link">
-              <Link to={ROUTE.HOME}>Home</Link>
-            </Nav.Link>
-          </Nav.Item>
+        <Nav className="navbar__nav">
           <Nav.Item className="navbar__nav__link">
-            <Button className="navbar__nav__link--button">
+            <Button className="navbar__nav__link--button mx-2">
               <Link
                 className="text-reset text-decoration-none"
                 to={ROUTE.ABOUT_DEVELOPER}
               >
                 About Developer
+              </Link>
+            </Button>
+          </Nav.Item>
+
+          <Nav.Item className="navbar__nav__link">
+            <Button className="navbar__nav__link--button mx-2">
+              <Link
+                className="text-reset text-decoration-none "
+                to={ROUTE.SIGN_OUT}
+              >
+                Sign Up
+              </Link>
+            </Button>
+            <Button className="navbar__nav__link--button mx-2">
+              <Link
+                className="text-reset text-decoration-none "
+                to={ROUTE.LOGIN}
+              >
+                Login
               </Link>
             </Button>
           </Nav.Item>

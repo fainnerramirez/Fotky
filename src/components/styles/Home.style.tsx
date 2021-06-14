@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as COLOR from "../Colors";
+import styled from 'styled-components';
+import { COLOR } from '../Colors';
 
 const HomeWrapp = styled.section`
   width: 100%;
@@ -18,7 +18,7 @@ const HomeWrapp = styled.section`
       h1 {
         color: ${COLOR.VERDE};
         font-size: 60px;
-        font-family: "Amaranth", sans-serif;
+        font-family: 'Amaranth', sans-serif;
         font-style: italic;
       }
     }
@@ -31,7 +31,7 @@ const HomeWrapp = styled.section`
         border-radius: 35px;
         outline: none;
         text-align: center;
-        font-family: "Amaranth", sans-serif;
+        font-family: 'Amaranth', sans-serif;
         font-size: 20px;
       }
     }

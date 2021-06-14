@@ -1,16 +1,20 @@
-import { Wrapper } from './styles/stylesFooter/Footer.styles';
+import { Wrapper } from './styles/Footer.styles';
 
 const Footer: React.FC = () => {
   return (
     <Wrapper>
       <div className="container-fluid ">
-        <h3>
+        <h4>
           Developed by
-          <a href="https://github.com/FainnerRamirez-Web" target="_blank">
+          <a
+            href="https://github.com/FainnerRamirez-Web"
+            target="_blank"
+            rel="noreferrer"
+          >
             {' '}
             Fainner Ramirez
           </a>
-        </h3>
+        </h4>
       </div>
     </Wrapper>
   );

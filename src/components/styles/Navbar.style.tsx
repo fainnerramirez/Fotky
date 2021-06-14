@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as COLOR from "../Colors";
+import styled from 'styled-components';
+import { COLOR } from '../Colors';
 
 const NavbarWrapp = styled.section`
   .navbar {
