@@ -1,16 +1,31 @@
 import React from 'react';
-import { app } from '../firebase/index';
+import AuthContext from '../providers/Store';
 import { COLOR } from './Colors';
 
-const SignOut: React.FC = () => {
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
-  const [nameUser, setNameUser] = React.useState<string>('');
-  const [warningName, setWarningName] = React.useState<boolean>(false);
-  const [warningEmail, setWarningEmail] = React.useState<boolean>(false);
-  const [warningPassword, setWarningPassword] = React.useState<boolean>(false);
-  const [message, setMessage] = React.useState<string>('');
-  const [success, setSuccess] = React.useState<boolean>(false);
+const SignOut: React.FC = (): React.ReactElement => {
+  const {
+    isAuthenticated,
+    email,
+    password,
+    nameUser,
+    setEmail,
+    setPassword,
+    setNameUser,
+    warningName,
+    setWarningName,
+    warningEmail,
+    setWarningEmail,
+    warningPassword,
+    setWarningPassword,
+    message,
+    setMessage,
+    authenticated,
+    setAuthenticated,
+    userNameFirebase,
+    setUserNameFirebase,
+    urlPhotoFirebase,
+    setUrlPhotoFirebase,
+  } = React.useContext(AuthContext);
 
   const handleInputName = (e: any) => {
     setWarningName(true);
@@ -27,58 +42,16 @@ const SignOut: React.FC = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    app
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        let { user } = userCredential;
-
-        user
-          ?.updateProfile({
-            displayName: nameUser,
-            //photoURL: `https://ui-avatars.com/api/?background=random&name=${nameUser}`,
-            photoURL: `https://www.avatarapi.com/js.aspx?email=${email}&size=128`,
-          })
-          .then(function () {
-            // Update successful.
-            console.log('User Update');
-          })
-          .catch(function (error) {
-            // An error happened
-            console.error(error);
-          });
-
-        setSuccess(true);
-      })
-      .catch((error) => {
-        var errorMessage = error.message;
-        console.log(errorMessage, error.code);
-
-        switch (error.code) {
-          case 'auth/email-already-in-use': {
-            setWarningEmail(true);
-            setMessage(error.message);
-            break;
-          }
-
-          case 'auth/invalid-email': {
-            setWarningEmail(true);
-            setMessage(error.message);
-            break;
-          }
-
-          case 'auth/weak-password': {
-            setWarningPassword(true);
-            setMessage(error.message);
-            break;
-          }
-        }
-      });
-
-    setNameUser('');
-    setEmail('');
-    setPassword('');
-    setWarningName(false);
+    try {
+      isAuthenticated();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setNameUser('');
+      setEmail('');
+      setPassword('');
+      setWarningName(false);
+    }
   };
 
   return (
@@ -154,7 +127,7 @@ const SignOut: React.FC = () => {
           )}
         </div>
 
-        {success && (
+        {authenticated && (
           <div className="p-3 mb-2 bg-success text-white text-center">
             <i className="fas fa-check-circle"></i> ¡User created correctly!
           </div>

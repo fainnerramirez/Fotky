@@ -14,8 +14,6 @@ import { ROUTE } from './components/Route';
 
 require('dotenv').config();
 
-console.log(process.env);
-
 const App = () => {
   return (
     <Router>

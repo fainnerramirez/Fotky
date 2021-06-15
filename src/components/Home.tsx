@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AuthContext from '../providers/Store';
 import axios from 'axios';
 //Css Components
 import HomeWrapp from './styles/Home.style';
@@ -47,6 +48,7 @@ const fetchApi: Function = async (searchUser: string, root: HTMLElement) => {
 };
 
 const Home: React.FC = () => {
+  const { userNameFirebase, authenticated } = React.useContext(AuthContext);
   const [images, setImages] = useState('');
   const [image, setImage] = useState(imageDefault);
 
@@ -69,7 +71,11 @@ const Home: React.FC = () => {
     <HomeWrapp>
       <div className="home">
         <div className="home__title">
-          <h1>FOTKY APP</h1>
+          {authenticated ? (
+            <h1>Welcome {userNameFirebase}</h1>
+          ) : (
+            <h1>FOTKY APP</h1>
+          )}
         </div>
         <div className="home__input">
           <input

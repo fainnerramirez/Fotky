@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthContext from '../providers/Store';
 import { Link } from 'react-router-dom';
 import NavbarWrapp from './styles/Navbar.style';
 //components Bootstrap
@@ -11,12 +12,23 @@ import Logo from '../assets/logo.png';
 import { ROUTE } from './Route';
 
 const NavbarApp: React.FC = () => {
+  const { userNameFirebase, urlPhotoFirebase, authenticated } =
+    React.useContext(AuthContext);
+
   return (
     <NavbarWrapp>
       <Navbar className="navbar">
         <Navbar.Brand href="/" className="navbar__logo">
           <Link to={ROUTE.HOME}>
-            <img src={Logo} alt="Logo App" />
+            {authenticated ? (
+              <img
+                src={urlPhotoFirebase}
+                alt={userNameFirebase}
+                title={userNameFirebase}
+              />
+            ) : (
+              <img src={Logo} alt="Logo alt" />
+            )}
           </Link>
         </Navbar.Brand>
 
